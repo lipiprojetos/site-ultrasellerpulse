@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ultra Seller Pulse — Gestão de Anúncios e Resultados no Mercado Livre</title>
+<meta name="description" content="Lucro real de cada venda, controle de Ads, promoções, Curva ABC, financeiro da empresa e calculadora de preço — tudo num painel só para quem vende no Mercado Livre. Teste 14 dias grátis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08080a;--bg2:#0f0f12;--card:#141418;--card2:#1a1a1f;--line:#24242b;--line2:#2f2f38;
+  --red:#e3192b;--red2:#ff4252;--redsoft:rgba(227,25,43,.12);--redglow:rgba(227,25,43,.35);
+  --txt:#f5f5f6;--mut:#a1a1aa;--mut2:#71717a;--ok:#22c55e;--okSoft:rgba(34,197,94,.12);--amb:#eab308;
+  --H:Sora,Inter,system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:Inter,system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--H);line-height:1.12;letter-spacing:-.025em}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+section{padding:100px 0;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red2);margin-bottom:16px}
+.eyebrow:before{content:"";width:18px;height:2px;background:var(--red2);border-radius:2px}
+.center .eyebrow:after{content:"";width:18px;height:2px;background:var(--red2);border-radius:2px}
+h2{font-size:clamp(1.9rem,4.4vw,3rem);margin-bottom:18px}
+h2 em{font-style:normal;color:var(--red2)}
+.lead{color:var(--mut);font-size:1.08rem;max-width:660px}
+.center{text-align:center}.center .lead{margin-left:auto;margin-right:auto}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:600;border-radius:12px;padding:15px 26px;font-size:1rem;transition:.25s;cursor:pointer;border:0}
+.btn-red{background:linear-gradient(180deg,#f02536,#d01426);color:#fff;box-shadow:0 10px 30px var(--redglow),inset 0 1px 0 rgba(255,255,255,.18)}
+.btn-red:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(227,25,43,.5),inset 0 1px 0 rgba(255,255,255,.18)}
+.btn-ghost{border:1px solid var(--line2);color:var(--txt);background:rgba(255,255,255,.02)}
+.btn-ghost:hover{border-color:#52525b;background:rgba(255,255,255,.05)}
+.btn .arr{transition:.25s}.btn:hover .arr{transform:translateX(3px)}
+.micro{color:var(--mut2);font-size:.85rem;margin-top:12px}
+.micro b{color:var(--mut);font-weight:500}
+.grad-line{height:1px;background:linear-gradient(90deg,transparent,var(--line2),transparent)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* header */
+header{position:sticky;top:0;z-index:60;background:rgba(8,8,10,.78);backdrop-filter:saturate(160%) blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--H);font-weight:700;font-size:1.08rem;letter-spacing:-.02em}
+.brand b{color:var(--red2);font-weight:700}
+.nav-links{display:flex;gap:30px;font-size:.93rem;color:var(--mut)}
+.nav-links a{transition:.2s}.nav-links a:hover{color:var(--txt)}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.nav-cta .btn{padding:10px 18px;font-size:.9rem}
+.menu-btn{display:none;background:none;border:1px solid var(--line2);color:var(--txt);border-radius:10px;width:42px;height:42px;font-size:1.15rem;cursor:pointer}
+.mobile-menu{display:none;flex-direction:column;padding:8px 22px 18px;border-top:1px solid var(--line)}
+.mobile-menu a{padding:12px 0;color:var(--mut);border-bottom:1px solid var(--line)}
+.mobile-menu.open{display:flex}
+@media(max-width:920px){.nav-links,.nav-cta .login{display:none}.menu-btn{display:block}.nav-cta .btn{padding:9px 14px;font-size:.84rem}.brand{font-size:.98rem}}
+
+/* hero */
+.hero{padding:86px 0 0;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none;background:
+ radial-gradient(900px 500px at 50% -10%,rgba(227,25,43,.22),transparent 60%),
+ radial-gradient(600px 400px at 90% 40%,rgba(227,25,43,.08),transparent 60%)}
+.hero-grid-bg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 70% 55% at 50% 20%,#000 20%,transparent 75%);opacity:.45}
+.hero-in{position:relative;text-align:center;max-width:900px;margin:0 auto}
+.pill{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line2);background:rgba(20,20,24,.7);border-radius:99px;padding:7px 16px 7px 8px;font-size:.86rem;color:var(--mut);margin-bottom:26px}
+.pill .tagx{background:var(--red);color:#fff;font-weight:700;font-size:.72rem;padding:3px 10px;border-radius:99px;letter-spacing:.04em}
+.hero h1{font-size:clamp(2.5rem,6.6vw,4.6rem);font-weight:800;margin-bottom:22px}
+.hero h1 .hl{background:linear-gradient(90deg,#ff4252,#ff7a59);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{margin:0 auto 34px;font-size:1.15rem}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.checks{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:22px;color:var(--mut);font-size:.88rem}
+.checks span{display:inline-flex;align-items:center;gap:7px}
+.checks span:before{content:"✓";color:var(--ok);font-weight:800}
+
+/* browser mock */
+.shot{position:relative;margin:64px auto 0;max-width:1080px;perspective:1600px}
+.shot:before{content:"";position:absolute;left:10%;right:10%;top:12%;height:70%;background:var(--red);filter:blur(120px);opacity:.28;z-index:0}
+.browser{position:relative;z-index:1;background:#0d0d10;border:1px solid var(--line2);border-radius:16px 16px 0 0;overflow:hidden;box-shadow:0 -10px 80px rgba(0,0,0,.6);transform:rotateX(8deg);transform-origin:bottom;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.shot.in .browser{transform:rotateX(0)}
+.bbar{display:flex;align-items:center;gap:8px;padding:11px 14px;border-bottom:1px solid var(--line);background:#111115}
+.bbar i{width:11px;height:11px;border-radius:50%;background:#2c2c33}
+.bbar i:nth-child(1){background:#ff5f57}.bbar i:nth-child(2){background:#febc2e}.bbar i:nth-child(3){background:#28c840}
+.bbar .url{margin-left:14px;flex:1;max-width:380px;background:#18181d;border:1px solid var(--line);border-radius:8px;font-size:.74rem;color:var(--mut2);padding:4px 12px;text-align:left}
+.app{display:grid;grid-template-columns:200px 1fr;min-height:0;text-align:left}
+.side{border-right:1px solid var(--line);padding:16px 12px;background:#0b0b0e}
+.side .lg{display:flex;align-items:center;gap:8px;font-family:var(--H);font-weight:700;font-size:.82rem;margin:0 6px 18px}
+.side a{display:flex;align-items:center;gap:9px;font-size:.8rem;color:var(--mut);padding:8px 10px;border-radius:8px;margin-bottom:2px}
+.side a.on{background:var(--redsoft);color:#fff}
+.side a i{width:6px;height:6px;border-radius:2px;background:var(--line2)}
+.side a.on i{background:var(--red2)}
+.main{padding:18px 20px}
+.mtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.mtop h4{font-size:1rem}
+.chips{display:flex;gap:5px}
+.chips i{font-style:normal;font-size:.7rem;padding:4px 9px;border-radius:7px;border:1px solid var(--line);color:var(--mut)}
+.chips i.on{background:var(--red);border-color:var(--red);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi small{color:var(--mut2);font-size:.7rem;display:block;margin-bottom:2px}
+.kpi strong{font-family:var(--H);font-size:1.15rem}
+.kpi .d{font-size:.7rem;margin-top:2px}
+.up{color:var(--ok)}.dn{color:var(--red2)}
+.mgrid{display:grid;grid-template-columns:1.6fr 1fr;gap:10px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.panel small.t{color:var(--mut2);font-size:.7rem;display:block;margin-bottom:6px}
+.tbl{width:100%;border-collapse:collapse;font-size:.74rem}
+.tbl td{padding:7px 0;border-bottom:1px solid var(--line)}
+.tbl tr:last-child td{border:0}
+.tbl td:not(:first-child){text-align:right}
+.tag{display:inline-block;font-size:.64rem;padding:2px 8px;border-radius:99px;font-weight:700}
+.tA{background:var(--okSoft);color:var(--ok)}.tB{background:rgba(234,179,8,.14);color:var(--amb)}.tC{background:var(--redsoft);color:var(--red2)}
+@media(max-width:820px){.app{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr 1fr}.mgrid{grid-template-columns:1fr}.browser{transform:none}}
+
+/* marquee */
+.marq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);padding:20px 0;overflow:hidden;position:relative}
+.marq:before,.marq:after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2}
+.marq:before{left:0;background:linear-gradient(90deg,var(--bg2),transparent)}
+.marq:after{right:0;background:linear-gradient(-90deg,var(--bg2),transparent)}
+.track{display:flex;gap:14px;width:max-content;animation:scroll 38s linear infinite}
+.track span{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;border:1px solid var(--line2);border-radius:99px;padding:8px 16px;font-size:.88rem;color:#d4d4d8;background:var(--card)}
+.track span:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red2)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--bg2)}
+.stat{padding:30px 24px;border-right:1px solid var(--line);text-align:center}
+.stat:last-child{border:0}
+.stat b{font-family:var(--H);font-size:2.6rem;font-weight:800;display:block;line-height:1}
+.stat b span{color:var(--red2)}
+.stat p{color:var(--mut);font-size:.9rem;margin-top:8px}
+@media(max-width:760px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+/* portfolio */
+.port{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin-top:52px;text-align:left}
+.prod{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:24px;padding:34px;position:relative;overflow:hidden;transition:.3s}
+.prod:hover{border-color:var(--line2);transform:translateY(-3px)}
+.prod.main-p{grid-row:span 2;border-color:rgba(227,25,43,.4);background:radial-gradient(500px 300px at 100% 0,rgba(227,25,43,.16),transparent 70%),linear-gradient(180deg,var(--card2),var(--card))}
+.plogo{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.plogo h3{font-size:1.35rem}
+.plogo small{display:block;color:var(--mut);font-size:.82rem;font-family:Inter}
+.prod p{color:var(--mut);margin-bottom:18px}
+.prod ul{list-style:none;display:grid;gap:9px;margin-bottom:24px}
+.prod li{display:flex;gap:10px;font-size:.94rem;color:#d4d4d8}
+.prod li:before{content:"✓";color:var(--ok);font-weight:800}
+.ribbon{position:absolute;top:22px;right:22px;font-size:.7rem;font-weight:700;letter-spacing:.06em;padding:5px 11px;border-radius:99px;background:var(--red);color:#fff}
+.ribbon.soon{background:var(--card2);border:1px solid var(--line2);color:var(--mut)}
+.prod.soon-p{opacity:.92}
+.prod .link{color:var(--red2);font-weight:600;font-size:.95rem}
+@media(max-width:900px){.port{grid-template-columns:1fr}.prod.main-p{grid-row:auto}}
+
+/* feature blocks */
+.fblock{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:center;padding:56px 0}
+.fblock.rev .ftxt{order:2}
+.ftxt h3{font-size:clamp(1.6rem,3.4vw,2.3rem);margin-bottom:16px}
+.ftxt p{color:var(--mut);font-size:1.04rem;margin-bottom:22px}
+.ftxt ul{list-style:none;display:grid;gap:10px;margin-bottom:26px}
+.ftxt li{display:flex;gap:10px;color:#d4d4d8}
+.ftxt li:before{content:"";flex:0 0 18px;height:18px;margin-top:3px;border-radius:6px;background:var(--redsoft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff4252' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/11px no-repeat}
+.fvis{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative}
+.fvis:before{content:"";position:absolute;inset:-1px;border-radius:22px;padding:1px;background:linear-gradient(140deg,rgba(255,66,82,.5),transparent 40%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.vhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:.82rem;color:var(--mut)}
+.vhead b{color:var(--txt);font-family:var(--H);font-size:.95rem}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;color:var(--ok)}
+.live:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.wf{display:grid;gap:8px}
+.wf-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:.88rem}
+.bar{grid-column:1/-1;height:6px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:6px;width:0;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.in .bar i{width:var(--w)}
+.wf-total{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:14px;border-top:1px dashed var(--line2)}
+.wf-total b{font-family:var(--H);font-size:1.5rem;color:var(--ok)}
+.ads-t{width:100%;border-collapse:collapse;font-size:.84rem}
+.ads-t th{font-size:.7rem;color:var(--mut2);font-weight:600;text-align:right;padding:0 0 10px;text-transform:uppercase;letter-spacing:.05em}
+.ads-t th:first-child,.ads-t td:first-child{text-align:left}
+.ads-t td{padding:11px 0;border-top:1px solid var(--line);text-align:right}
+.fin-list{display:grid;gap:8px;margin-bottom:14px}
+.fin-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.86rem}
+.fin-ico{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--redsoft);font-size:.95rem}
+.fin-item small{display:block;color:var(--mut2);font-size:.72rem}
+.fin-res{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.fin-res div{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.fin-res small{display:block;color:var(--mut2);font-size:.7rem}
+.fin-res b{font-family:var(--H)}
+.explain{background:var(--redsoft);border:1px solid rgba(227,25,43,.3);border-radius:14px;padding:16px 18px;margin-bottom:24px;font-size:.95rem;color:#e4e4e7}
+.explain b{color:#fff}
+.promo{display:grid;gap:10px}
+.promo-c{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.promo-c small{color:var(--mut2);font-size:.74rem;grid-column:1}
+.verdict{grid-row:span 2;font-size:.74rem;font-weight:700;padding:6px 12px;border-radius:99px}
+.v-ok{background:var(--okSoft);color:var(--ok)}.v-no{background:var(--redsoft);color:var(--red2)}.v-mid{background:rgba(234,179,8,.14);color:var(--amb)}
+.abc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.abc div{border-radius:14px;padding:16px;text-align:center;border:1px solid var(--line)}
+.abc b{font-family:var(--H);font-size:1.8rem;display:block}
+.abc small{color:var(--mut);font-size:.76rem}
+.abcA{background:var(--okSoft)}.abcA b{color:var(--ok)}
+.abcB{background:rgba(234,179,8,.08)}.abcB b{color:var(--amb)}
+.abcC{background:var(--redsoft)}.abcC b{color:var(--red2)}
+@media(max-width:900px){.fblock{grid-template-columns:1fr;gap:34px;padding:40px 0}.fblock.rev .ftxt{order:0}}
+
+/* sem x com */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:50px;text-align:left}
+.vs-c{border-radius:22px;padding:32px;border:1px solid var(--line)}
+.vs-c h4{font-size:1.1rem;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.vs-c ul{list-style:none;display:grid;gap:14px}
+.vs-c li{display:flex;gap:12px;font-size:.98rem}
+.vs-no{background:var(--bg2)}.vs-no li{color:var(--mut)}.vs-no li:before{content:"✕";color:#52525b;font-weight:800}
+.vs-yes{background:radial-gradient(400px 250px at 100% 0,rgba(227,25,43,.18),transparent 70%),var(--card);border-color:rgba(227,25,43,.4)}
+.vs-yes li:before{content:"✓";color:var(--ok);font-weight:800}
+@media(max-width:800px){.vs{grid-template-columns:1fr}}
+
+/* calc */
+.calc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.cmp{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.cmp-r{display:grid;grid-template-columns:1.6fr .8fr .8fr;padding:13px 20px;border-bottom:1px solid var(--line);font-size:.9rem;align-items:center}
+.cmp-r:last-child{border:0}
+.cmp-r div:not(:first-child){text-align:center}
+.cmp-h{background:var(--bg2);font-size:.74rem;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.cmp-h .us{color:var(--red2)}
+.y{color:var(--ok);font-weight:800}.x{color:#52525b;font-weight:800}.s{color:var(--mut2);font-size:.8rem}
+.money{margin-top:22px;background:linear-gradient(135deg,rgba(34,197,94,.12),transparent);border:1px solid rgba(34,197,94,.3);border-radius:16px;padding:18px 20px}
+.money b{color:var(--ok)}
+@media(max-width:900px){.calc-wrap{grid-template-columns:1fr;gap:36px}}
+
+/* team */
+.team{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.perm{display:grid;gap:8px}
+.perm div{display:flex;justify-content:space-between;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:.92rem}
+.tg{width:38px;height:22px;border-radius:99px;background:var(--ok);position:relative}
+.tg:after{content:"";position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#fff}
+.tg.off{background:#3f3f46}.tg.off:after{right:auto;left:3px}
+.perm .lock{color:var(--mut2)}
+@media(max-width:900px){.team{grid-template-columns:1fr;gap:36px}}
+
+/* origin */
+.origin{background:radial-gradient(700px 300px at 50% 0,rgba(227,25,43,.12),transparent 70%),var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.quote{font-family:var(--H);font-size:clamp(1.4rem,3vw,2rem);font-weight:600;max-width:820px;margin:0 auto 20px;letter-spacing:-.02em}
+.quote em{font-style:normal;color:var(--red2)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px;text-align:left;position:relative}
+.step{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px}
+.step .num{font-family:var(--H);font-weight:800;font-size:.85rem;width:38px;height:38px;border-radius:12px;background:var(--red);display:grid;place-items:center;margin-bottom:18px;box-shadow:0 8px 24px var(--redglow)}
+.step h3{font-size:1.12rem;margin-bottom:8px}
+.step p{color:var(--mut);font-size:.95rem}
+@media(max-width:800px){.steps{grid-template-columns:1fr}}
+
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:50px;text-align:left}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 24px;display:flex;flex-direction:column;position:relative;transition:.3s}
+.plan:hover{border-color:var(--line2)}
+.plan.pop{border-color:var(--red);background:radial-gradient(300px 200px at 50% 0,rgba(227,25,43,.16),transparent 70%),var(--card);box-shadow:0 0 0 1px var(--red),0 24px 70px rgba(227,25,43,.22)}
+.badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--red);font-size:.7rem;font-weight:700;padding:5px 13px;border-radius:99px;white-space:nowrap;letter-spacing:.04em}
+.plan h3{font-size:1rem;color:var(--mut);font-weight:600;margin-bottom:6px;font-family:Inter}
+.plan .who{font-size:.82rem;color:var(--mut2);margin-bottom:18px;min-height:2.6em}
+.price{font-family:var(--H);font-weight:800;font-size:2.7rem;line-height:1;letter-spacing:-.03em}
+.price small{font-size:1rem;color:var(--mut);font-weight:500}
+.per{color:var(--mut2);font-size:.86rem;margin:6px 0 22px}
+.plan ul{list-style:none;margin-bottom:26px;flex:1}
+.plan li{font-size:.9rem;padding:8px 0;border-bottom:1px solid var(--line);color:#d4d4d8;display:flex;gap:9px}
+.plan li:before{content:"✓";color:var(--ok);font-weight:800}
+.plan li.gift{color:#fff}.plan li.gift:before{content:"★";color:var(--red2)}
+.plan .btn{width:100%}
+.incl{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 26px;text-align:left}
+.incl h4{font-size:.95rem;margin-bottom:14px;color:var(--mut);font-family:Inter;font-weight:600}
+.incl-g{display:flex;flex-wrap:wrap;gap:8px}
+.incl-g span{font-size:.85rem;padding:6px 12px;border-radius:99px;background:var(--bg2);border:1px solid var(--line)}
+.note{color:var(--mut2);font-size:.86rem;margin-top:18px;text-align:center}
+@media(max-width:1060px){.plans{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.plans{grid-template-columns:1fr}}
+
+/* faq */
+.faq{max-width:820px;margin:46px auto 0;text-align:left}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;padding:0 24px;transition:.2s}
+details[open]{border-color:var(--line2)}
+summary{list-style:none;cursor:pointer;padding:20px 0;font-weight:600;display:flex;justify-content:space-between;gap:16px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";color:var(--red2);font-size:1.5rem;line-height:1;font-weight:400;transition:.2s}
+details[open] summary:after{transform:rotate(45deg)}
+details p{color:var(--mut);padding-bottom:22px;font-size:.96rem}
+
+/* final */
+.final{padding:110px 0}
+.final-box{text-align:center;border:1px solid rgba(227,25,43,.35);border-radius:30px;padding:70px 30px;background:radial-gradient(600px 300px at 50% 0,rgba(227,25,43,.25),transparent 70%),var(--bg2);position:relative;overflow:hidden}
+.final h2{font-size:clamp(2rem,5vw,3.3rem)}
+footer{border-top:1px solid var(--line);padding:56px 0 34px;color:var(--mut);font-size:.9rem}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}
+.foot h5{font-family:var(--H);color:var(--txt);font-size:.88rem;margin-bottom:14px}
+.foot a{display:block;padding:4px 0}
+.foot a:hover{color:var(--txt)}
+.copy{border-top:1px solid var(--line);margin-top:40px;padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.82rem;color:var(--mut2)}
+@media(max-width:800px){.foot{grid-template-columns:1fr 1fr}}
+
+/* vídeos */
+.vbtn{display:inline-flex;align-items:center;gap:10px;background:none;border:0;color:var(--txt);font:600 .95rem Inter,sans-serif;cursor:pointer;margin:0 0 22px;padding:0}
+.vbtn .pl{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--redsoft);border:1px solid rgba(227,25,43,.45);transition:.25s}
+.vbtn .pl:before{content:"";border-left:11px solid var(--red2);border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px}
+.vbtn:hover .pl{background:var(--red);}.vbtn:hover .pl:before{border-left-color:#fff}
+.vbtn small{display:block;color:var(--mut2);font-weight:500;font-size:.78rem}
+.vbtn span.tx{text-align:left;line-height:1.3}
+.playover{position:absolute;inset:0;z-index:3;display:grid;place-items:center;cursor:pointer;background:radial-gradient(circle at center,rgba(8,8,10,.35),rgba(8,8,10,.1) 60%);border:0;width:100%}
+.playover .big{display:flex;align-items:center;gap:14px;background:rgba(10,10,12,.82);backdrop-filter:blur(8px);border:1px solid var(--line2);border-radius:99px;padding:10px 22px 10px 10px;color:#fff;font:600 1rem Inter,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.playover .big i{width:52px;height:52px;border-radius:50%;background:var(--red);display:grid;place-items:center;box-shadow:0 0 0 8px rgba(227,25,43,.2);animation:ring 2s infinite}
+.playover .big i:before{content:"";border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.playover .big small{display:block;font-weight:500;color:var(--mut);font-size:.8rem}
+@keyframes ring{50%{box-shadow:0 0 0 14px rgba(227,25,43,.08)}}
+.vframe{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--line2);background:radial-gradient(400px 200px at 50% 40%,rgba(227,25,43,.2),transparent 70%),#0d0d10;max-width:760px;margin:0 auto 34px;cursor:pointer;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.vframe .playover{background:none}
+.vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.modal{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modal-box{width:min(960px,100%);position:relative}
+.modal-box h4{font-size:1rem;margin-bottom:12px;color:var(--mut);font-family:Inter;font-weight:600}
+.modal-v{aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid var(--line2);background:#0d0d10;display:grid;place-items:center;text-align:center;color:var(--mut);padding:20px}
+.modal-v iframe{width:100%;height:100%;border:0}
+.modal-x{position:absolute;top:-6px;right:0;background:none;border:0;color:#fff;font-size:1.8rem;cursor:pointer;line-height:1}
+.soon-tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:99px;background:rgba(234,179,8,.14);color:var(--amb);margin-left:8px;vertical-align:middle}
+.dre{font-size:.9rem}
+.dre-r{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)}
+.dre-r.sub{color:var(--mut)}
+.dre-r.tot{font-weight:700;border-bottom:1px solid var(--line2);background:linear-gradient(90deg,rgba(255,255,255,.03),transparent);padding-left:8px;padding-right:8px;margin:2px -8px}
+.dre-r.fin{border:0;margin-top:8px;padding:14px 12px;border-radius:12px;background:var(--okSoft);font-family:var(--H);font-weight:700;font-size:1.05rem}
+.dre-r.fin span:last-child{color:var(--ok)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand" aria-label="Ultra Seller Pulse">
+      <svg width="36" height="36" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#e3192b"/><polyline points="5,24 12,24 16,14 21,30 25,18 28,24 35,24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Ultra Seller <b>Pulse</b></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#produtos">Produtos</a><a href="#funcoes">Funções</a><a href="#financeiro">Financeiro</a><a href="#dre">DRE</a><a href="#calculadora">Calculadora</a><a href="#planos">Planos</a><a href="#duvidas">Dúvidas</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost login" href="https://app.ultrasellerpulse.com.br">Entrar</a>
+      <a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Testar grátis</a>
+      <button class="menu-btn" aria-label="Abrir menu" onclick="document.getElementById('mm').classList.toggle('open')">☰</button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mm" onclick="this.classList.remove('open')">
+    <a href="#produtos">Produtos</a><a href="#funcoes">Funções</a><a href="#financeiro">Financeiro</a><a href="#dre">DRE</a><a href="#calculadora">Calculadora</a><a href="#planos">Planos</a><a href="#duvidas">Dúvidas</a><a href="https://app.ultrasellerpulse.com.br">Entrar no painel</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div><div class="hero-grid-bg"></div>
+  <div class="wrap">
+    <div class="hero-in">
+      <div class="pill"><span class="tagx">NOVO</span> Gestão de Anúncios e Resultados para o Mercado Livre</div>
+      <h1>Você vende todo dia.<br>Agora vai saber <span class="hl">quanto sobra no bolso.</span></h1>
+      <p class="lead">Lucro real de cada venda, controle de Ads, promoções, Curva ABC, financeiro da empresa e calculadora de preço. Tudo num painel só, conversando entre si.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Começar meus 14 dias grátis <span class="arr">→</span></a>
+        <a class="btn btn-ghost" href="#produtos">Conhecer os produtos</a>
+      </div>
+      <div class="checks"><span>14 dias grátis</span><span>Sem cartão para testar</span><span>Conexão oficial com o Mercado Livre</span></div>
+    </div>
+
+    <div class="shot reveal" aria-label="Exemplo do painel Ultra Seller Pulse">
+      <button class="playover" data-video="principal" data-title="Conheça o Ultra Seller Pulse"><span class="big"><i></i><span>Assista: o Ultra Seller Pulse em 2 minutos<small>Vídeo de apresentação</small></span></span></button>
+      <div class="browser">
+        <div class="bbar"><i></i><i></i><i></i><div class="url">app.ultrasellerpulse.com.br</div></div>
+        <div class="app">
+          <div class="side">
+            <div class="lg"><svg width="22" height="22" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#e3192b"/><polyline points="5,24 12,24 16,14 21,30 25,18 28,24 35,24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Ultra Seller Pulse</div>
+            <a class="on"><i></i>Painel</a><a><i></i>Vendas</a><a><i></i>Ads</a><a><i></i>Promoções</a><a><i></i>Curva ABC</a><a><i></i>Financeiro</a><a><i></i>DRE</a><a><i></i>Calculadora</a><a><i></i>Configurações</a>
+          </div>
+          <div class="main">
+            <div class="mtop"><h4>Painel de resultados</h4><div class="chips"><i>Hoje</i><i>7d</i><i>15d</i><i class="on">30d</i><i>60d</i><i>90d</i></div></div>
+            <div class="kpis">
+              <div class="kpi"><small>Faturamento</small><strong>R$ 48.920</strong><div class="d up">▲ 12,4%</div></div>
+              <div class="kpi"><small>Lucro líquido</small><strong>R$ 11.740</strong><div class="d up">Margem 24,0%</div></div>
+              <div class="kpi"><small>Investido em Ads</small><strong>R$ 4.410</strong><div class="d dn">TACOS 9,0%</div></div>
+              <div class="kpi"><small>Pedidos</small><strong>1.128</strong><div class="d up">Ticket R$ 43,37</div></div>
+            </div>
+            <div class="mgrid">
+              <div class="panel"><small class="t">Lucro por dia</small>
+                <svg viewBox="0 0 300 120" width="100%" height="150" preserveAspectRatio="none"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3192b" stop-opacity=".5"/><stop offset="1" stop-color="#e3192b" stop-opacity="0"/></linearGradient></defs>
+                <g stroke="#24242b" stroke-width="1"><line x1="0" y1="30" x2="300" y2="30"/><line x1="0" y1="60" x2="300" y2="60"/><line x1="0" y1="90" x2="300" y2="90"/></g>
+                <path d="M0,92 L20,86 40,88 60,70 80,74 100,58 120,63 140,50 160,56 180,40 200,45 220,33 240,40 260,26 280,30 300,18 L300,120 L0,120Z" fill="url(#g1)"/>
+                <polyline points="0,92 20,86 40,88 60,70 80,74 100,58 120,63 140,50 160,56 180,40 200,45 220,33 240,40 260,26 280,30 300,18" fill="none" stroke="#ff4252" stroke-width="2.5"/></svg>
+              </div>
+              <div class="panel"><small class="t">Lucro por produto</small>
+                <table class="tbl">
+                  <tr><td>Garrafa térmica 1L</td><td>R$ 18,40 <span class="tag tA">A</span></td></tr>
+                  <tr><td>Kit organizador</td><td>R$ 9,15 <span class="tag tB">B</span></td></tr>
+                  <tr><td>Luminária LED</td><td>R$ 6,80 <span class="tag tB">B</span></td></tr>
+                  <tr><td>Suporte celular</td><td>– R$ 2,10 <span class="tag tC">Prejuízo</span></td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marq" aria-hidden="true">
+  <div class="track">
+    <span>Lucro por venda</span><span>Controle de Ads</span><span>TACOS por produto</span><span>Promoções</span><span>Curva ABC</span><span>Financeiro da empresa</span><span>DRE</span><span>Custo e nota fiscal</span><span>Calculadora de preço</span><span>Clássico × Premium</span><span>Acesso para equipe</span><span>Filtros de 1 a 90 dias</span>
+    <span>Lucro por venda</span><span>Controle de Ads</span><span>TACOS por produto</span><span>Promoções</span><span>Curva ABC</span><span>Financeiro da empresa</span><span>DRE</span><span>Custo e nota fiscal</span><span>Calculadora de preço</span><span>Clássico × Premium</span><span>Acesso para equipe</span><span>Filtros de 1 a 90 dias</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section style="padding:70px 0">
+  <div class="wrap">
+    <div class="stats reveal">
+      <div class="stat"><b data-n="7">0</b><p>módulos num só painel</p></div>
+      <div class="stat"><b><span data-n="14">0</span></b><p>dias grátis para testar</p></div>
+      <div class="stat"><b data-n="6">0</b><p>períodos de análise, de hoje a 90 dias</p></div>
+      <div class="stat"><b data-n="0">0</b><p>planilhas para atualizar</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFÓLIO -->
+<section id="produtos" style="padding-top:30px">
+  <div class="wrap center">
+    <span class="eyebrow">Nosso portfólio</span>
+    <h2>Ferramentas feitas para <em>quem vende</em> no Mercado Livre</h2>
+    <p class="lead">Comece pelo gestor completo ou só pela calculadora. Os produtos conversam entre si e crescem junto com a sua loja.</p>
+
+    <div class="port">
+      <div class="prod main-p reveal">
+        <span class="ribbon">PRODUTO PRINCIPAL</span>
+        <div class="plogo"><svg width="48" height="48" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#e3192b"/><polyline points="5,24 12,24 16,14 21,30 25,18 28,24 35,24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div><h3>Ultra Seller Pulse</h3><small>Gestão de Anúncios e Resultados</small></div></div>
+        <p>O painel de gestão completo da sua loja. Mostra o lucro de verdade de cada venda e de cada produto, e junta num lugar só tudo que hoje está espalhado em planilhas e relatórios.</p>
+        <ul>
+          <li>Lucro real venda a venda, com todas as taxas</li>
+          <li>Controle de Mercado Ads por produto (TACOS)</li>
+          <li>Promoções com margem calculada antes de entrar</li>
+          <li>Curva ABC dos seus produtos</li>
+          <li>Financeiro com os lançamentos da empresa</li>
+          <li>DRE automático do mês (em breve)</li>
+          <li>Calculadora incluída nos planos Escala e Empresarial</li>
+          <li>Acesso para funcionários, sem mostrar o financeiro</li>
+        </ul>
+        <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Testar 14 dias grátis <span class="arr">→</span></a><a class="btn btn-ghost" href="#planos">Ver planos</a></div>
+      </div>
+
+      <div class="prod reveal">
+        <span class="ribbon" style="background:var(--card2);border:1px solid var(--red);color:var(--red2)">A PARTIR DE R$ 29,90</span>
+        <div class="plogo"><svg width="44" height="44" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#18181d" stroke="#e3192b" stroke-width="1.5"/><rect x="11" y="8" width="18" height="24" rx="3" fill="none" stroke="#ff4252" stroke-width="2.2"/><path d="M15 13h10M15 19h2M21 19h4M15 24h2M21 24h4" stroke="#ff4252" stroke-width="2.2" stroke-linecap="round"/></svg><div><h3>Ultra Seller Calc</h3><small>Calculadora para Mercado Livre</small></div></div>
+        <p>O preço certo para a margem que você quer — com comissão, frete, imposto, Ads e custo de operação. Mostra até onde dá para baixar e se vale igualar o concorrente.</p>
+        <a class="link" href="#calculadora">Conhecer a calculadora →</a>
+      </div>
+
+      <div class="prod soon-p reveal">
+        <span class="ribbon soon">EM BREVE</span>
+        <div class="plogo"><svg width="44" height="44" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#18181d" stroke="#2f2f38" stroke-width="1.5"/><path d="M9 28l7-9 5 6 4-4 6 7" fill="none" stroke="#a1a1aa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="13" r="3" fill="none" stroke="#a1a1aa" stroke-width="2.2"/></svg><div><h3>Novas ferramentas</h3><small>Em desenvolvimento</small></div></div>
+        <p>Tendências do Mercado Livre por categoria e criador de imagens para anúncios. Quem já é cliente fica sabendo primeiro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="grad-line"></div></div>
+
+<!-- FUNÇÕES NA PRÁTICA -->
+<section id="funcoes" style="padding-bottom:40px">
+  <div class="wrap">
+    <div class="center"><span class="eyebrow">Na prática</span><h2>Veja o Ultra Seller Pulse <em>trabalhando</em> por você</h2><p class="lead">As telas que mais economizam tempo e dinheiro, do jeito que aparecem no sistema.</p></div>
+
+    <!-- 1 lucro por venda -->
+    <div class="fblock reveal">
+      <div class="ftxt">
+        <span class="eyebrow">Lucro venda a venda</span>
+        <h3>Faturamento é vaidade. Lucro é o que paga as contas.</h3>
+        <p>Cada pedido aparece aberto, centavo por centavo: quanto o comprador pagou, quanto o Mercado Livre ficou e quanto realmente sobrou para você.</p>
+        <ul><li>Comissão, tarifa fixa, frete e descontos de cada venda</li><li>Imposto da sua nota fiscal e custo do produto</li><li>Ads rateado por produto — o custo que ninguém mostra</li></ul>
+        <button class="vbtn" data-video="lucro" data-title="Lucro venda a venda"><span class="pl"></span><span class="tx">Assistir ao vídeo<small>Lucro venda a venda</small></span></button>
+        <a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Ver meu lucro de verdade <span class="arr">→</span></a>
+        <div class="micro"><b>14 dias grátis</b> · cancele quando quiser</div>
+      </div>
+      <div class="fvis">
+        <div class="vhead"><b>Pedido #2000012345</b><span class="live">Atualizado agora</span></div>
+        <div class="wf">
+          <div class="wf-row"><span>Valor da venda</span><b>R$ 149,90</b><div class="bar"><i style="--w:100%;background:#52525b"></i></div></div>
+          <div class="wf-row"><span>Comissão + tarifa ML</span><span class="dn">– R$ 26,98</span><div class="bar"><i style="--w:18%;background:var(--red2)"></i></div></div>
+          <div class="wf-row"><span>Frete</span><span class="dn">– R$ 19,45</span><div class="bar"><i style="--w:13%;background:var(--red2)"></i></div></div>
+          <div class="wf-row"><span>Imposto (NF 8%)</span><span class="dn">– R$ 11,99</span><div class="bar"><i style="--w:8%;background:var(--red2)"></i></div></div>
+          <div class="wf-row"><span>Custo do produto</span><span class="dn">– R$ 42,00</span><div class="bar"><i style="--w:28%;background:var(--red2)"></i></div></div>
+          <div class="wf-row"><span>Mercado Ads</span><span class="dn">– R$ 11,10</span><div class="bar"><i style="--w:7%;background:var(--red2)"></i></div></div>
+        </div>
+        <div class="wf-total"><span>Lucro líquido desta venda</span><b>R$ 38,38</b></div>
+      </div>
+    </div>
+
+    <!-- 2 Ads -->
+    <div class="fblock rev reveal">
+      <div class="ftxt">
+        <span class="eyebrow">Controle de Ads</span>
+        <h3>Descubra quais campanhas dão lucro — e quais só gastam.</h3>
+        <p>Veja quanto cada produto gastou em Mercado Ads, quanto vendeu e o TACOS de cada um. Pare de pagar propaganda para produto que dá prejuízo.</p>
+        <ul><li>Investimento e venda de Ads por produto</li><li>TACOS e lucro depois da propaganda</li><li>Sinal claro: escalar, ajustar ou pausar</li></ul>
+        <button class="vbtn" data-video="ads" data-title="Controle de Ads"><span class="pl"></span><span class="tx">Assistir ao vídeo<small>Controle de Ads</small></span></button>
+        <a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Controlar meus Ads <span class="arr">→</span></a>
+      </div>
+      <div class="fvis">
+        <div class="vhead"><b>Ads por produto · 30 dias</b><span>TACOS geral 9,0%</span></div>
+        <table class="ads-t">
+          <tr><th>Produto</th><th>Gasto</th><th>TACOS</th><th>Ação</th></tr>
+          <tr><td>Garrafa térmica 1L</td><td>R$ 820</td><td>5,1%</td><td><span class="verdict v-ok">Escalar</span></td></tr>
+          <tr><td>Kit organizador</td><td>R$ 1.140</td><td>9,8%</td><td><span class="verdict v-mid">Ajustar</span></td></tr>
+          <tr><td>Luminária LED</td><td>R$ 690</td><td>8,2%</td><td><span class="verdict v-ok">Manter</span></td></tr>
+          <tr><td>Suporte celular</td><td>R$ 960</td><td>21,4%</td><td><span class="verdict v-no">Pausar</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3 Financeiro -->
+    <div class="fblock reveal" id="financeiro">
+      <div class="ftxt">
+        <span class="eyebrow">Financeiro da empresa</span>
+        <h3>O lucro do mês de verdade, com todos os gastos da empresa.</h3>
+        <div class="explain"><b>Como funciona:</b> o Financeiro é onde você <b>lança as despesas da sua empresa</b> — aluguel, salários, contador, embalagem, internet, sistemas. O Ultra Seller Pulse junta esses lançamentos com o lucro das vendas e mostra quanto a empresa realmente ganhou no mês.</div>
+        <ul><li>Lançamentos de despesas fixas e variáveis</li><li>Despesas que se repetem todo mês, lançadas uma vez</li><li>Resultado do mês: lucro das vendas menos gastos da empresa</li><li>Alimenta o DRE automático da sua loja</li><li>Só o dono vê — funcionários não têm acesso</li></ul>
+        <button class="vbtn" data-video="financeiro" data-title="Financeiro da empresa"><span class="pl"></span><span class="tx">Assistir ao vídeo<small>Financeiro da empresa</small></span></button>
+        <a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Organizar meu financeiro <span class="arr">→</span></a>
+      </div>
+      <div class="fvis">
+        <div class="vhead"><b>Lançamentos · Novembro</b><span>+ Novo lançamento</span></div>
+        <div class="fin-list">
+          <div class="fin-item"><div class="fin-ico">🏢</div><div>Aluguel do galpão<small>Fixa · todo mês</small></div><span class="dn">– R$ 1.800</span></div>
+          <div class="fin-item"><div class="fin-ico">👥</div><div>Salário expedição<small>Fixa · todo mês</small></div><span class="dn">– R$ 2.100</span></div>
+          <div class="fin-item"><div class="fin-ico">📦</div><div>Embalagens e etiquetas<small>Variável</small></div><span class="dn">– R$ 640</span></div>
+          <div class="fin-item"><div class="fin-ico">🧾</div><div>Contador<small>Fixa · todo mês</small></div><span class="dn">– R$ 450</span></div>
+        </div>
+        <div class="fin-res">
+          <div><small>Lucro das vendas</small><b class="up">R$ 11.740</b></div>
+          <div><small>Gastos da empresa</small><b class="dn">R$ 4.990</b></div>
+          <div><small>Resultado do mês</small><b>R$ 6.750</b></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 3b DRE -->
+    <div class="fblock rev reveal" id="dre">
+      <div class="ftxt">
+        <span class="eyebrow">DRE automático</span>
+        <h3>O DRE da sua loja, pronto todo mês.<span class="soon-tag">CHEGANDO</span></h3>
+        <p>O DRE (Demonstrativo de Resultado) é o relatório que mostra, de cima para baixo, como o faturamento vira lucro. O Ultra Seller Pulse monta sozinho, juntando as vendas do Mercado Livre com os lançamentos do Financeiro.</p>
+        <ul><li>Do faturamento bruto ao lucro líquido, linha por linha</li><li>Taxas, frete, impostos, custo dos produtos e Ads separados</li><li>Despesas da empresa vindas do Financeiro</li><li>Compare um mês com o outro e veja onde o dinheiro foi</li></ul>
+        <button class="vbtn" data-video="dre" data-title="DRE automático"><span class="pl"></span><span class="tx">Assistir ao vídeo<small>DRE automático</small></span></button>
+        <a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Testar grátis <span class="arr">→</span></a>
+      </div>
+      <div class="fvis">
+        <div class="vhead"><b>DRE · Outubro</b><span class="live">Gerado automaticamente</span></div>
+        <div class="dre">
+          <div class="dre-r"><span>Faturamento bruto</span><b>R$ 48.920</b></div>
+          <div class="dre-r sub"><span>(–) Comissões e tarifas ML</span><span class="dn">R$ 8.810</span></div>
+          <div class="dre-r sub"><span>(–) Fretes</span><span class="dn">R$ 4.120</span></div>
+          <div class="dre-r sub"><span>(–) Impostos (NF)</span><span class="dn">R$ 3.910</span></div>
+          <div class="dre-r tot"><span>= Receita líquida</span><span>R$ 32.080</span></div>
+          <div class="dre-r sub"><span>(–) Custo dos produtos</span><span class="dn">R$ 15.930</span></div>
+          <div class="dre-r sub"><span>(–) Mercado Ads</span><span class="dn">R$ 4.410</span></div>
+          <div class="dre-r tot"><span>= Lucro das vendas</span><span>R$ 11.740</span></div>
+          <div class="dre-r sub"><span>(–) Despesas da empresa (Financeiro)</span><span class="dn">R$ 4.990</span></div>
+          <div class="dre-r fin"><span>Lucro líquido do mês</span><span>R$ 6.750</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 Promoções -->
+    <div class="fblock reveal">
+      <div class="ftxt">
+        <span class="eyebrow">Promoções</span>
+        <h3>Entre só nas promoções que ainda deixam lucro.</h3>
+        <p>Antes de aceitar cupom, oferta relâmpago ou campanha do Mercado Livre, veja quanto sobra com o desconto. Sem susto no fim do mês.</p>
+        <ul><li>Margem calculada com o desconto aplicado</li><li>Alerta quando a promoção vira prejuízo</li><li>Desconto máximo que ainda mantém a sua margem</li></ul>
+        <button class="vbtn" data-video="promocoes" data-title="Promoções"><span class="pl"></span><span class="tx">Assistir ao vídeo<small>Promoções</small></span></button>
+        <a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Testar grátis <span class="arr">→</span></a>
+      </div>
+      <div class="fvis">
+        <div class="vhead"><b>Promoções disponíveis</b><span>3 convites</span></div>
+        <div class="promo">
+          <div class="promo-c"><b>Oferta relâmpago · 15% off</b><span class="verdict v-ok">Margem 21%</span><small>Garrafa térmica 1L</small></div>
+          <div class="promo-c"><b>Cupom do vendedor · 10% off</b><span class="verdict v-mid">Margem 12%</span><small>Kit organizador</small></div>
+          <div class="promo-c"><b>Campanha ML · 25% off</b><span class="verdict v-no">Prejuízo</span><small>Suporte celular</small></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 Curva ABC -->
+    <div class="fblock rev reveal">
+      <div class="ftxt">
+        <span class="eyebrow">Curva ABC</span>
+        <h3>Saiba quais produtos sustentam a sua loja.</h3>
+        <p>Poucos produtos trazem a maior parte do lucro. A Curva ABC mostra quais são, para você saber onde colocar estoque, Ads e atenção.</p>
+        <ul><li>Classificação automática A, B e C</li><li>Por faturamento e por lucro</li><li>Produtos que vendem muito e lucram pouco em destaque</li></ul>
+        <button class="vbtn" data-video="curva" data-title="Curva ABC"><span class="pl"></span><span class="tx">Assistir ao vídeo<small>Curva ABC</small></span></button>
+        <a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Ver minha Curva ABC <span class="arr">→</span></a>
+      </div>
+      <div class="fvis">
+        <div class="vhead"><b>Curva ABC · 90 dias</b><span>48 produtos</span></div>
+        <div class="abc"><div class="abcA"><b>A</b><small>9 produtos<br>72% do lucro</small></div><div class="abcB"><b>B</b><small>14 produtos<br>21% do lucro</small></div><div class="abcC"><b>C</b><small>25 produtos<br>7% do lucro</small></div></div>
+        <div class="wf">
+          <div class="wf-row"><span>Classe A</span><span class="up">72%</span><div class="bar"><i style="--w:72%;background:var(--ok)"></i></div></div>
+          <div class="wf-row"><span>Classe B</span><span style="color:var(--amb)">21%</span><div class="bar"><i style="--w:21%;background:var(--amb)"></i></div></div>
+          <div class="wf-row"><span>Classe C</span><span class="dn">7%</span><div class="bar"><i style="--w:7%;background:var(--red2)"></i></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEM x COM -->
+<section style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap center">
+    <span class="eyebrow">Por que Ultra Seller Pulse</span>
+    <h2>Menos planilha. <em>Mais lucro.</em></h2>
+    <p class="lead">A maioria das ferramentas faz uma coisa só. Aqui o custo que você cadastra uma vez aparece no lucro, nos Ads, na Curva ABC, no financeiro e na calculadora.</p>
+    <div class="vs">
+      <div class="vs-c vs-no reveal"><h4>Sem o Ultra Seller Pulse</h4><ul>
+        <li>Uma ferramenta para cada coisa, e nenhuma conversa com a outra</li>
+        <li>Planilha de Ads preenchida na mão todo dia</li>
+        <li>Promoção aceita no escuro, prejuízo descoberto depois</li>
+        <li>Preço no chute e margem que some nas taxas</li>
+        <li>Fim do mês sem saber se deu lucro ou prejuízo</li></ul></div>
+      <div class="vs-c vs-yes reveal"><h4>Com o Ultra Seller Pulse</h4><ul>
+        <li>Um painel só, do anúncio ao resultado do mês</li>
+        <li>Ads por produto calculado automaticamente</li>
+        <li>Margem de cada promoção antes de você aceitar</li>
+        <li>Preço certo com todas as taxas de 2026</li>
+        <li>Resultado do mês com todos os gastos da empresa</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULADORA -->
+<section id="calculadora">
+  <div class="wrap calc-wrap">
+    <div class="reveal">
+      <span class="eyebrow">Ultra Seller Calc</span>
+      <h2>Calculadora comum te dá um preço. <em>A nossa mostra quanto sobra.</em></h2>
+      <p class="lead">Coloque o custo e a margem que você quer. A Ultra Seller Calc devolve o preço exato, até onde dá para baixar, se vale igualar o concorrente e se rende mais o Clássico ou o Premium.</p>
+      <div class="money"><b>Exemplo real:</b> no preço do concorrente (R$ 135,00) o lucro era R$ 23,33. No Preço Certo (R$ 163,19), R$ 40,80. São <b>R$ 17,47 a mais por venda</b> — duas vendas pagam a mensalidade.</div>
+      <div style="margin-top:26px"><button class="vbtn" data-video="calculadora" data-title="Ultra Seller Calc"><span class="pl"></span><span class="tx">Assistir ao vídeo<small>Ultra Seller Calc</small></span></button></div><div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><a class="btn btn-red" href="https://calc.ultrasellerpulse.com.br">Testar a calculadora <span class="arr">→</span></a><span class="micro" style="margin:0"><b>R$ 29,90/mês</b> · grátis nos planos Escala e Empresarial</span></div>
+    </div>
+    <div class="cmp reveal">
+      <div class="cmp-r cmp-h"><div></div><div>Calculadoras comuns</div><div class="us">Ultra Seller Calc</div></div>
+      <div class="cmp-r"><div>Comissão e frete</div><div class="y">✓</div><div class="y">✓</div></div>
+      <div class="cmp-r"><div>Imposto, Ads e custo de operação</div><div class="s">às vezes</div><div class="y">✓</div></div>
+      <div class="cmp-r"><div>Preço exato para a sua margem</div><div class="s">às vezes</div><div class="y">✓</div></div>
+      <div class="cmp-r"><div>Até onde baixar sem prejuízo</div><div class="x">✕</div><div class="y">✓</div></div>
+      <div class="cmp-r"><div>"Se eu igualar o concorrente, lucro?"</div><div class="x">✕</div><div class="y">✓</div></div>
+      <div class="cmp-r"><div>Clássico × Premium lado a lado</div><div class="x">✕</div><div class="y">✓</div></div>
+      <div class="cmp-r"><div>Desconto máximo para ofertas</div><div class="x">✕</div><div class="y">✓</div></div>
+      <div class="cmp-r"><div>Para onde vai cada real</div><div class="x">✕</div><div class="y">✓</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPE -->
+<section style="padding-top:20px">
+  <div class="wrap team">
+    <div class="fvis reveal">
+      <div class="vhead"><b>Acesso · Operador de expedição</b><span>Permissões</span></div>
+      <div class="perm">
+        <div>Painel e vendas<span class="tg"></span></div>
+        <div>Anúncios e Ads<span class="tg"></span></div>
+        <div>Promoções e Curva ABC<span class="tg"></span></div>
+        <div><span class="lock">🔒 Financeiro da empresa</span><span class="tg off"></span></div>
+        <div><span class="lock">🔒 Planos e pagamento</span><span class="tg off"></span></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">Equipe</span>
+      <h2>Sua equipe trabalha. <em>Seus números ficam com você.</em></h2>
+      <p class="lead" style="margin-bottom:24px">Dê acesso para quem trabalha com você sem abrir o financeiro da empresa. Planos e pagamento aparecem só para o dono.</p>
+      <button class="vbtn" data-video="equipe" data-title="Acesso para a equipe"><span class="pl"></span><span class="tx">Assistir ao vídeo<small>Acesso para a equipe</small></span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ORIGEM -->
+<section class="origin center">
+  <div class="wrap reveal">
+    <span class="eyebrow">Feito por seller, para seller</span>
+    <p class="quote">O Ultra Seller Pulse nasceu <em>dentro de uma loja do Mercado Livre</em>, para resolver os problemas de quem vende todo dia — e é usado nela até hoje.</p>
+    <p class="lead">Cada tela existe porque um seller precisou dela. Nada de função bonita que ninguém usa.</p>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="wrap center">
+    <span class="eyebrow">Como funciona</span>
+    <h2>Do cadastro ao lucro real <em>em minutos</em></h2>
+    <p class="lead">Sem implantação demorada e sem consultoria. Você mesmo configura.</p>
+    <div class="steps">
+      <div class="step reveal"><div class="num">01</div><h3>Crie sua conta</h3><p>Cadastro rápido com seu e-mail. Os 14 dias grátis começam na hora, sem cartão.</p></div>
+      <div class="step reveal"><div class="num">02</div><h3>Conecte o Mercado Livre</h3><p>Autorização oficial pela página do Mercado Livre. Sua senha nunca passa pelo sistema.</p></div>
+      <div class="step reveal"><div class="num">03</div><h3>Veja seu lucro real</h3><p>Cadastre o custo dos produtos e lance os gastos da empresa. O resto o painel calcula.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section id="planos" style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap center">
+    <span class="eyebrow">Planos</span>
+    <h2>Comece hoje com <em>14 dias grátis</em></h2>
+    <p class="lead">Todos os planos têm todas as funções. O que muda é só a quantidade de pedidos por mês.</p>
+    <div class="plans">
+      <div class="plan reveal"><h3>Inicial</h3><div class="who">Para quem está começando a vender</div><div class="price"><small>R$</small> 87</div><div class="per">por mês</div>
+        <ul><li>Até 300 pedidos/mês</li><li>1 loja do Mercado Livre</li><li>Todas as funções</li></ul>
+        <a class="btn btn-ghost" href="https://app.ultrasellerpulse.com.br">Começar grátis</a></div>
+      <div class="plan pop reveal"><span class="badge">MAIS ESCOLHIDO</span><h3>Profissional</h3><div class="who">Para lojas com vendas todos os dias</div><div class="price"><small>R$</small> 177</div><div class="per">por mês</div>
+        <ul><li>Até 1.500 pedidos/mês</li><li>1 loja do Mercado Livre</li><li>Todas as funções</li></ul>
+        <a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Começar grátis</a></div>
+      <div class="plan reveal"><h3>Escala</h3><div class="who">Para operações em crescimento</div><div class="price"><small>R$</small> 347</div><div class="per">por mês</div>
+        <ul><li>Até 5.000 pedidos/mês</li><li>1 loja do Mercado Livre</li><li>Todas as funções</li><li class="gift">Calculadora grátis</li></ul>
+        <a class="btn btn-ghost" href="https://app.ultrasellerpulse.com.br">Começar grátis</a></div>
+      <div class="plan reveal"><h3>Empresarial</h3><div class="who">Para grandes volumes de vendas</div><div class="price"><small>R$</small> 597</div><div class="per">por mês</div>
+        <ul><li>Até 10.000 pedidos/mês</li><li>1 loja do Mercado Livre</li><li>Todas as funções</li><li class="gift">Calculadora grátis</li></ul>
+        <a class="btn btn-ghost" href="https://app.ultrasellerpulse.com.br">Começar grátis</a></div>
+    </div>
+    <div class="incl reveal"><h4>Incluído em todos os planos</h4><div class="incl-g"><span>Painel de resultados</span><span>Lucro por venda</span><span>Controle de Ads</span><span>Promoções</span><span>Curva ABC</span><span>Financeiro da empresa</span><span>DRE (em breve)</span><span>Custo e nota fiscal</span><span>Acesso para equipe</span><span>Filtros de hoje a 90 dias</span></div></div>
+    <p class="note">Sem cartão para testar · Cancele quando quiser · Passou do limite 3 meses seguidos? O plano é ajustado — o painel nunca é bloqueado.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="duvidas">
+  <div class="wrap center">
+    <span class="eyebrow">Dúvidas</span>
+    <h2>Perguntas frequentes</h2>
+    <div class="faq">
+      <details><summary>Preciso de cartão para testar?</summary><p>Não. Você cria a conta e usa tudo por 14 dias. Se quiser continuar, assina com o mesmo e-mail e nada se perde.</p></details>
+      <details><summary>O que é o Financeiro?</summary><p>É onde você lança as despesas da sua empresa — aluguel, salários, contador, embalagens, internet, sistemas. Despesas que se repetem todo mês você lança uma vez só. O painel junta esses gastos com o lucro das vendas e mostra o resultado real do mês. Só o dono da conta vê essa parte.</p></details>
+      <details><summary>Por que o preço muda conforme o número de pedidos?</summary><p>Para ser justo com quem está começando: quem vende pouco não paga por um plano gigante. E você só muda de plano quando já está vendendo mais — e o painel nunca é bloqueado no meio das vendas.</p></details>
+      <details><summary>Funciona em quais marketplaces?</summary><p>Hoje o Ultra Seller Pulse é feito para o Mercado Livre — e por isso vai fundo em Ads, promoções e taxas da plataforma.</p></details>
+      <details><summary>Preciso ter um ERP (Bling, Olist…)?</summary><p>Não. A conexão é direta com o Mercado Livre. Se você já usa um ERP, pode continuar usando junto.</p></details>
+      <details><summary>Meus dados ficam seguros?</summary><p>Sim. A conexão é feita pela autorização oficial do Mercado Livre, sua senha nunca passa pelo sistema e os dados de cada loja ficam separados.</p></details>
+      <details><summary>Posso dar acesso para meus funcionários?</summary><p>Sim. Eles usam o painel sem ver o financeiro da empresa nem a página de planos e pagamento.</p></details>
+      <details><summary>A calculadora vem junto?</summary><p>Ela é grátis nos planos Escala e Empresarial. Nos outros planos, ou para quem quer só a calculadora, ela custa R$ 29,90 por mês, também com 14 dias grátis.</p></details>
+      <details><summary>Posso cancelar quando quiser?</summary><p>Sim, sem multa. A assinatura simplesmente não renova no mês seguinte.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final" style="padding-top:20px">
+  <div class="wrap">
+    <div class="final-box reveal">
+      <span class="eyebrow">Sua próxima venda começa aqui</span>
+      <h2>Descubra hoje quanto você <em>lucra de verdade</em></h2>
+      <p class="lead" style="margin:0 auto 32px">Uma mensagem de quem criou o Ultra Seller Pulse — e como começar em poucos minutos.</p>
+      <div class="vframe" data-video="final" data-title="Comece agora"><button class="playover" data-video="final" data-title="Comece agora"><span class="big"><i></i><span>Comece agora<small>Vídeo de encerramento</small></span></span></button></div>
+      <p class="lead" style="margin:0 auto 28px">Conecte sua conta do Mercado Livre e veja o lucro real de cada venda ainda hoje.</p>
+      <a class="btn btn-red" href="https://app.ultrasellerpulse.com.br">Começar meus 14 dias grátis <span class="arr">→</span></a>
+      <div class="micro"><b>Sem cartão</b> · cancele quando quiser</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="brand" style="margin-bottom:12px"><svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#e3192b"/><polyline points="5,24 12,24 16,14 21,30 25,18 28,24 35,24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Ultra Seller <b>Pulse</b></span></div>
+        <p style="max-width:280px">Gestão de Anúncios e Resultados para quem vende no Mercado Livre.</p>
+      </div>
+      <div><h5>Produtos</h5><a href="https://app.ultrasellerpulse.com.br">Ultra Seller Pulse</a><a href="https://calc.ultrasellerpulse.com.br">Ultra Seller Calc</a><a href="#planos">Planos</a></div>
+      <div><h5>Ajuda</h5><a href="#duvidas">Dúvidas</a><a href="#como-funciona">Como funciona</a><a href="mailto:contato@ultrasellerpulse.com.br">contato@ultrasellerpulse.com.br</a></div>
+      <div><h5>Legal</h5><a href="/privacidade">Política de Privacidade</a><a href="/termos">Termos de Uso</a></div>
+    </div>
+    <div class="copy"><span>© 2026 MS Pulse · Ultra Seller Pulse</span><span>Feito por seller, para seller.</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  function countUp(el){var n=+el.getAttribute('data-n'),t0=null;if(!n){el.textContent='0';return}
+    function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/1200,1);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)}
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});document.querySelectorAll('[data-n]').forEach(function(e){e.textContent=e.getAttribute('data-n')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');e.target.querySelectorAll('[data-n]').forEach(countUp);io.unobserve(e.target)}})},{threshold:.15});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+
+<div class="modal" id="vmodal" onclick="if(event.target===this)closeV()">
+  <div class="modal-box"><button class="modal-x" onclick="closeV()" aria-label="Fechar">×</button><h4 id="vtitle"></h4><div class="modal-v" id="vbox"></div></div>
+</div>
+<script>
+/* ===========================================================
+   LINKS DOS VÍDEOS — cole o link do YouTube (ou Vimeo) entre as aspas.
+   Vazio = aparece "vídeo em produção".
+   =========================================================== */
+var VIDEOS = {
+  principal:   "",  // topo do site (chamada principal) — apresentação em ~2 min
+  lucro:       "",  // Lucro venda a venda
+  ads:         "",  // Controle de Ads
+  financeiro:  "",  // Financeiro da empresa (lançamentos)
+  dre:         "",  // DRE automático
+  promocoes:   "",  // Promoções
+  curva:       "",  // Curva ABC
+  calculadora: "",  // Ultra Seller Calc
+  equipe:      "",  // Acesso para a equipe
+  final:       ""   // vídeo de encerramento (fim da página)
+};
+function toEmbed(u){
+  if(!u)return "";
+  var m=u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/); if(m)return "https://www.youtube.com/embed/"+m[1]+"?autoplay=1&rel=0";
+  m=u.match(/vimeo\.com\/(\d+)/); if(m)return "https://player.vimeo.com/video/"+m[1]+"?autoplay=1";
+  return u;
+}
+function openV(key,title){
+  var box=document.getElementById('vbox'),src=toEmbed(VIDEOS[key]);
+  document.getElementById('vtitle').textContent=title||'';
+  box.innerHTML=src?'<iframe src="'+src+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>'
+    :'<div><div style="font-size:2.4rem;margin-bottom:8px">🎬</div><b style="color:#fff">Vídeo em produção</b><br>Em breve você vai ver aqui como funciona: '+(title||'')+'.</div>';
+  document.getElementById('vmodal').classList.add('open');
+}
+function closeV(){document.getElementById('vmodal').classList.remove('open');document.getElementById('vbox').innerHTML='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeV()});
+document.querySelectorAll('[data-video]').forEach(function(el){
+  if(el.classList.contains('vframe'))return;
+  el.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();openV(el.dataset.video,el.dataset.title)});
+});
+</script>
+</body>
+</html>
